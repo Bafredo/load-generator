@@ -1,5 +1,7 @@
 module ddos
 
-go 1.22.2
+go 1.24.0
 
-require golang.org/x/time v0.5.0
+toolchain go1.24.7
+
+require golang.org/x/time v0.13.0
