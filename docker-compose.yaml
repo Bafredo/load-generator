@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  load-generator:
+    build: .
+    environment:
+      - TARGET_URL=https://pinetswap.net/piswap.html
+      - NUM_WORKERS=450
+      - REQUEST_DELAY=10ms
+      - STATS_INTERVAL=5s
+    deploy:
+      replicas: 8  # Number of replicas to run
+    restart: unless-stopped
+    # Optional: Add resource limits
+    mem_limit: 256m
+    cpus: 0.5
+    
+  # Alternative: Define multiple named services if you need different configs
+  load-generator-1:
+    build: .
+    environment:
+      - TARGET_URL=https://pinetswap.net/piswap.html
+      - NUM_WORKERS=450
+      - REQUEST_DELAY=10ms
+      - STATS_INTERVAL=5s
+    deploy:
+      replicas: 8  # Number of replicas to run
+    restart: unless-stopped
+    # Optional: Add resource limits
+    mem_limit: 256m
+    cpus: 0.5
+    
+  load-generator-2:
+    build: .
+    environment:
+      - TARGET_URL=https://pinetswap.net/piswap.html
+      - NUM_WORKERS=450
+      - REQUEST_DELAY=10ms
+      - STATS_INTERVAL=5s
+    deploy:
+      replicas: 8  # Number of replicas to run
+    restart: unless-stopped
+    # Optional: Add resource limits
+    mem_limit: 256m
+    cpus: 0.5
+
+# Optional: Create a network for the containers
+networks:
+  default:
+    name: load-test-network
