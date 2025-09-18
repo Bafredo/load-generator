@@ -5,13 +5,14 @@ services:
     build: .
     environment:
       - TARGET_URL=https://pinetswap.net/piswap.html
-      - NUM_WORKERS=450
+      - NUM_WORKERS=400
       - REQUEST_DELAY=10ms
       - STATS_INTERVAL=5s
+      - MAX_RPS=1000
     deploy:
-      replicas: 8  # Number of replicas to run
+      replicas: 5  # Number of replicas to run
     restart: unless-stopped
-    # Optional: Add resource limits
+    # Resource limits to prevent system overload
     mem_limit: 256m
     cpus: 0.5
     
@@ -20,29 +21,25 @@ services:
     build: .
     environment:
       - TARGET_URL=https://pinetswap.net/piswap.html
-      - NUM_WORKERS=450
-      - REQUEST_DELAY=10ms
-      - STATS_INTERVAL=5s
-    deploy:
-      replicas: 8  # Number of replicas to run
+      - NUM_WORKERS=300
+      - REQUEST_DELAY=20ms
+      - MAX_RPS=500
     restart: unless-stopped
-    # Optional: Add resource limits
-    mem_limit: 256m
-    cpus: 0.5
+    mem_limit: 128m
+    cpus: 0.25
+    profiles: ["manual"] # Only runs when explicitly specified
     
   load-generator-2:
     build: .
     environment:
       - TARGET_URL=https://pinetswap.net/piswap.html
-      - NUM_WORKERS=450
-      - REQUEST_DELAY=10ms
-      - STATS_INTERVAL=5s
-    deploy:
-      replicas: 8  # Number of replicas to run
+      - NUM_WORKERS=300
+      - REQUEST_DELAY=50ms
+      - MAX_RPS=200
     restart: unless-stopped
-    # Optional: Add resource limits
-    mem_limit: 256m
-    cpus: 0.5
+    mem_limit: 128m
+    cpus: 0.25
+    profiles: ["manual"]
 
 # Optional: Create a network for the containers
 networks:
